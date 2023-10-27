@@ -21,11 +21,13 @@ func encoder(what string) (result string) {
 	for _, v := range []byte(what) {
 		result += binaryConverter(strconv.FormatInt(int64(v), 2)) + SPACE + " "
 	}
-	result = strings.Trim(strings.TrimSuffix(result, SPACE+" "), " ")
-	return
+	return strings.Trim(strings.TrimSuffix(result, SPACE+" "), " ")
 }
 
 func decoder(what string) (result string) {
+	if len(what) == 0 {
+		return ""
+	}
 	chunks := []byte{}
 	for _, v := range strings.Split(what, SPACE) {
 		result, err := strconv.ParseInt(
@@ -36,8 +38,7 @@ func decoder(what string) (result string) {
 		}
 		chunks = append(chunks, byte(result))
 	}
-	result = string(chunks)
-	return
+	return string(chunks)
 }
 
 func main() {
